@@ -4,7 +4,7 @@
 [![Latest Downloads](https://img.shields.io/github/downloads/LeafWulf/factiontrackerwidget/latest/module.zip?logo=github&color=18AF3C&label=latest%20downloads)](https://github.com/LeafWulf/factiontrackerwidget/releases/latest) [![Total Downloads](https://img.shields.io/github/downloads/LeafWulf/factiontrackerwidget/module.zip?logo=github&color=18AF3C&label=total%20downloads)](https://github.com/LeafWulf/factiontrackerwidget/releases)  
 [![Discord](https://dcbadge.vercel.app/api/shield/219289132235489280?style=flat)](https://discordapp.com/users/219289132235489280) [![Ko-fi](https://img.shields.io/badge/Ko--fi-winterwulf-ff5e5b?logo=kofi&logoColor=white&)](https://ko-fi.com/winterwulf)
 
-# Module Name
+# Faction Tracker Widget
 This module...
 
 ## Functions
