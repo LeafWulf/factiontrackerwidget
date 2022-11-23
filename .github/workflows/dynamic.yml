@@ -1,0 +1,28 @@
+name: Dynamic README.md
+
+on:
+  create:
+
+jobs:
+  update_templates:
+    name: "Update Templates"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥  Fetching Repository Contents"
+        uses: actions/checkout@main
+
+      ### Runs a set of commands using the runners shell
+      - name: Update README.md
+        run: |
+          sed -i 's/<repo-name>/'${{ github.event.repository.name }}'/g' README.md
+          sed -i 's/<repo-name>/'${{ github.event.repository.name }}'/g' scripts/const.js
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          sed -i 's/<repo-name>/'${{ github.event.repository.name }}'/g' module.json
+          mv scripts/module.js scripts/${{ github.event.repository.name }}.js
+          mv styles/module.css styles/${{ github.event.repository.name }}.css
+          echo "/* JS */" > scripts/${{ github.event.repository.name }}.js
+          echo "/* CSS */" > styles/${{ github.event.repository.name }}.css
+          git add .
+          git commit -am "Automated with dynamic.yml"
+          git push
