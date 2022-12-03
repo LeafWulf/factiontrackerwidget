@@ -1,1 +1,115 @@
-/* CSS */
+#ftw-app {
+    text-align: center;
+}
+
+/* #ftw-app progress {
+    border-radius: 10px;
+    padding: 2px;
+    color: rgb(247, 111, 111);
+    background-color: white;
+} */
+
+#ftw-app progress {
+    /* Reset the default appearance */
+    appearance: none;
+    width: 150px;
+    margin: 0 10px;
+    height: 12px;
+}
+
+#ftw-app progress::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+#ftw-app progress::-webkit-progress-value {
+    position: relative;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+    border-radius: 3px;
+
+    /* Let's animate this */
+    animation: animate-stripes 5s linear infinite;
+}
+
+p.notes {
+    flex: 0 0 100%;
+    font-size: var(--font-size-12);
+    line-height: var(--line-height-16);
+    color: var(--color-text-dark-secondary);
+    margin: 3px 0;
+}
+
+#ftw-app button {
+    flex: 1;
+}
+
+.rep-button {
+    width: 28px;
+    height: 24px;
+    align-content: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    border-radius: 4px;
+}
+
+.ftw-section {
+    display: flex;
+}
+.ftw-section button {
+    width: 27px;
+    height: 26px;
+    font-size: x-small;
+    align-content: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin: 2px 0;
+    align-self: center;
+    border-radius: 4px;
+}
+
+.ftw-faction label{
+    font-size: medium;
+    font-weight: bold;
+    bottom: -12px;
+    position: relative;
+}
+#ftw-app span {
+    font-size: smaller;
+    position: relative;
+    top: -6px
+}
+
+#ftw-app h1 {
+    margin: 0 4px 2px;
+    width: 80%;
+}
+
+#ftw-options button {
+    font-size: small;
+    margin: 0px 2px;
+}
+
+.section {
+    border: 1px solid #999;
+    border-radius: 8px;
+    margin: 4px 0;
+    padding: 0 5px 5px 5px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.ftw-faction {
+    border: 1px solid rgb(0, 112, 187);
+    border-radius: 8px;
+    margin: 4px -2px;
+    background: rgba(0, 112, 187, 0.1);
+}
+
+/* .form-group{
+    clear: both;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 3px 0;
+    align-items: center;
+} */

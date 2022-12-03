@@ -1,6 +1,6 @@
 {
   "id": "factiontrackerwidget",
-  "title": "factiontrackerwidget",
+  "title": "Faction Tracker Widget",
   "description": "A module for Foundry Virtual Tabletop",
   "version": "This is auto replaced",
   "library": "false",
@@ -33,7 +33,8 @@
     "scripts/lib/lib.js"
   ],
   "styles": [
-    "styles/factiontrackerwidget.css"
+    "styles/factiontrackerwidget.css",
+    "styles/ftw.css"
   ],
   "languages": [
     {
