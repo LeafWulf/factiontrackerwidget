@@ -207,9 +207,8 @@ class Section {
                         if (secArray === 'removed') FTW.toggleAppVis()
                         else if (!secArray) notValidString()
                         else {
-                            let section = this.renderSections(secArray)
+                            let section = this.renderSections(secArray, true)
                             $('#ftw-sections').append(section)
-                            // FTW.toggleAppVis()
                         }
                         game.modules.get(MODULE).FTW.setPosition({ height: "auto" });
                     }
@@ -317,7 +316,6 @@ class Faction {
                         else {
                             let faction = this.renderFactions(facArray)
                             $(`section[id="${section}"]`).append(faction)
-                            // FTW.toggleAppVis()
                         }
                         game.modules.get(MODULE).FTW.setPosition({ height: "auto" });
                     }

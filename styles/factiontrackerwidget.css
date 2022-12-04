@@ -85,6 +85,15 @@ p.notes {
     width: 80%;
 } */
 
+#ftw-options {
+    display: flex;
+    position: sticky;
+    bottom: -8px;
+    max-height: 100px;
+    padding: 7px 0px;
+    background: url(../../../ui/parchment.jpg) repeat;
+}
+
 #ftw-options button {
     font-size: small;
     margin: 0px 2px;
