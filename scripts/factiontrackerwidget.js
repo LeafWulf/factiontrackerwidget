@@ -42,6 +42,11 @@ export class FTW extends FormApplication {
         FTW._isOpen = true;
     }
 
+    // async _renderInner(data){
+    //     await super._renderInner(data)
+    //     Section.renderSections(ftw)
+    // }
+
     async _updateObject(ev, formData) {
         // console.log(formData)
         this.currentConfig = formData
@@ -204,12 +209,11 @@ class Section {
                         else sectionName = $('#section-option').find(":selected").val()
                         if (!sectionName) return notValidString()
                         let secArray = await this.addSection({ add, sectionName })
-                        if (secArray === 'removed') FTW.toggleAppVis()
-                        else if (!secArray) notValidString()
-                        else {
-                            let section = this.renderSections(secArray, true)
-                            $('#ftw-sections').append(section)
+                        if (!secArray) notValidString()
+                        else if (secArray !== 'removed') {
+                            this.renderSections(secArray, false)
                         }
+                        await game.modules.get(MODULE).FTW._render(true)
                         game.modules.get(MODULE).FTW.setPosition({ height: "auto" });
                     }
                 },
@@ -248,7 +252,6 @@ class Section {
 
             if (section.factions.length > 0) {
                 factions = Faction.renderFactions(section.factions)
-                // console.warn(faction)
                 $(`section[id="${section.class}"]`).append(factions)
             }
         });
@@ -311,12 +314,12 @@ class Faction {
                         if (add) repValue = $('input[name="current-rep"]')[0].value
                         if (!factionName) return notValidString()
                         let facArray = await this.addFaction({ add, factionName, repValue, section })
-                        if (facArray === 'removed') FTW.toggleAppVis()
-                        else if (!facArray) notValidString()
-                        else {
+                        if (!facArray) notValidString()
+                        else if (facArray !== 'removed') {
                             let faction = this.renderFactions(facArray)
                             $(`section[id="${section}"]`).append(faction)
                         }
+                        await game.modules.get(MODULE).FTW._render(true)
                         game.modules.get(MODULE).FTW.setPosition({ height: "auto" });
                     }
                 },
