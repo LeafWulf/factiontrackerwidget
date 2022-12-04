@@ -189,13 +189,13 @@ class Section {
             contentNotes = '<p class="notes">Name of the section you would like to remove.</p>'
         }
         let content =
-            `<div class="form-group">
+            `<form><div class="form-group">
                 <label>Section Name:</label>
                 <div class="form-fields">
                     ${input}
                 </div>
                 ${contentNotes}
-            </div>`
+            </div></form>`
         new FDialog({
             title,
             content,
@@ -293,13 +293,13 @@ class Faction {
             input += `</select>`
             contentNotes = '<p class="notes">Name of the faction you would like to remove.</p>'
         }
-        let content = `<div class="form-group">
+        let content = `<form><div class="form-group">
                             <label>Faction Name:</label>
                             <div class="form-fields">
                                 ${input}
                             </div>
                             ${contentNotes}
-                        </div>`
+                        </div></form>`
         new FDialog({
             title,
             content,
