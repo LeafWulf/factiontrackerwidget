@@ -1,1 +1,107 @@
-/* CSS */
+.window-content #ftw body {
+	display: grid;
+	place-items: center;
+}
+.faction-group:not(:first-child) {
+	margin-top: 0.5rem;
+}
+.faction-group header {
+	background-color: rgba(255, 255, 240, 0.8);
+	border: 1px solid var(--color-border-light-primary);
+	border-bottom: 2px solid var(--color-underline-header);
+	border-radius: 3px 3px 0px 0px;
+	display: flex;
+}
+.faction-group header button {
+	border-width: 0px;
+	flex: 0;
+}
+.faction-group header h1 {
+	border: 1px solid var(--color-border-light-primary);
+	border-bottom-width: 0px;
+	border-top-width: 0px;
+	flex: 1;
+	margin: 0px;
+	padding: 0.5rem;
+	text-align: center;
+}
+.faction-group section {
+	background-color: rgba(0 0 0 / 10%);
+	border: 1px solid var(--color-border-light-primary);
+	border-top-width: 0px;
+	border-radius: 0px 0px 3px 3px;
+	display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+	padding: 0.5rem;
+}
+.faction-group section .faction {
+  background: rgba(255, 255, 240, 0.8);
+	border-radius: 3px;
+	display: flex;
+	gap: 0.5rem;
+}
+.faction-group section .faction * {
+	flex: 1;
+}
+.faction-group section .faction button {
+	border-radius: 0px;
+	border-width: 0px;
+	flex: 0;
+}
+.faction-group section .faction button:first-child {
+	border-radius: 3px 0px 0px 3px;
+}
+.faction-group section .faction button:last-child {
+	border-radius: 3px 0px 0px 3px;
+}
+
+.faction-group section .faction .form-group {
+	display: flex;
+	flex-direction: column;
+}
+.faction-group section .faction .form-group label {
+	font-weight: bold;
+	font-size: 1.15rem;
+	padding-top: 0.5rem;
+	text-align: center;
+}
+.faction-group section .faction .form-group p.notes {
+	font-size: 0.75rem;
+	margin: 0px;
+	text-align: center;
+}
+.faction-group section .faction input[type="range"] { 
+    margin: auto;
+    -webkit-appearance: none;
+    position: relative;
+    overflow: hidden;
+    height: 20px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 3px;
+		border-width:0px
+}
+
+.faction-group section .faction input[type="range"]::-webkit-slider-runnable-track {
+  background: rgba(0, 0, 0, 0.1);
+	border-radius: 0px;
+	border-width: 0px;
+	box-shadow: none;
+	height: auto;
+}
+
+.faction-group section .faction input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; 
+  height: 20px;
+  background: var(--color-text-hyperlink);
+  box-shadow: -100vw 0 0 100vw var(--color-text-hyperlink);
+	border-width: 0px;
+}
+
+
+.faction-group header button i,
+.faction-group section .faction button i {
+	margin-right: 0px;
+}

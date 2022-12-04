@@ -1,6 +1,6 @@
-#ftw-app {
+/* #ftw-app {
     text-align: center;
-}
+} */
 
 /* #ftw-app progress {
     border-radius: 10px;
@@ -40,18 +40,18 @@ p.notes {
     margin: 3px 0;
 }
 
-#ftw-app button {
+/* #ftw-app button {
     flex: 1;
-}
+} */
 
-.rep-button {
+/* .rep-button {
     width: 28px;
     height: 24px;
     align-content: center;
     display: inline-flex;
     flex-wrap: wrap;
     border-radius: 4px;
-}
+} */
 
 .ftw-section {
     display: flex;
@@ -74,16 +74,16 @@ p.notes {
     bottom: -12px;
     position: relative;
 }
-#ftw-app span {
+/* #ftw-app span {
     font-size: smaller;
     position: relative;
     top: -6px
-}
+} */
 
-#ftw-app h1 {
+/* #ftw-app h1 {
     margin: 0 4px 2px;
     width: 80%;
-}
+} */
 
 #ftw-options button {
     font-size: small;

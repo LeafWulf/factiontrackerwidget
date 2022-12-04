@@ -1,6 +1,6 @@
 import { MODULE, MODULE_DIR } from "./const.js"; //import the const variables
 import { registerSettings, cacheSettings, debug, ftw, ftwConfig } from "./settings.js"; //import settings
-import { convertValues, notValidString, removeSpaces, repNames } from "./util.js"
+import { notValidString, removeSpaces, repNames } from "./util.js"
 import { FDialog } from "./dialog.js"
 
 // Hook that trigger once when the game is initiated. Register and cache settings.
@@ -73,6 +73,7 @@ export class FTW extends FormApplication {
         if (!game.modules.get(MODULE).FTW) game.modules.get(MODULE).FTW = app
 
         Section.renderSections(ftw)
+
         // $('#ftw-sections').append(sections)
         // let factions = Faction.renderFactions(ftw)
 
@@ -93,27 +94,35 @@ export class FTW extends FormApplication {
             Section.addSectionDialog(false)
         })
 
-        html.find('button[title="Decrease Reputation"]').on('click', async function (event) {
+        html.find('button[data-adjust]').on('click', async function (event) {
             let secFac = event.currentTarget.id.split(".")
             let index = ftw.findIndex(i => i.class === secFac[0])
             let fIndex = ftw[index].factions.findIndex(i => i.id === secFac[1])
-            let newRep = Math.floor(ftw[index].factions[fIndex].reputation) - 1
-            if (newRep >= ftwConfig.rep.min) ftw[index].factions[fIndex].reputation = newRep
+            const button = event.target.closest('button');
+            const elem = button.closest('.faction');
+            const input = elem.querySelector('input[type="range"]');
+            let newRep = parseInt(ftw[index].factions[fIndex].reputation) + parseInt(button.dataset.adjust)
+            if (newRep >= ftwConfig.rep.min && newRep <= ftwConfig.rep.max) ftw[index].factions[fIndex].reputation = newRep
             else return
+            input.value = newRep
+            const factionDiv = event.target.closest('.faction')
+            const notes = factionDiv.children[1].lastElementChild
+            notes.innerHTML = repNames(newRep) + ` (${newRep})`
             await game.settings.set(MODULE, 'ftw', ftw)
             cacheSettings()
-            FTW.toggleAppVis()
         })
-        html.find('button[title="Increase Reputation"]').on('click', async function (event) {
-            let secFac = event.currentTarget.id.split(".")
+        html.find('input[type="range"]').on('change', async event => {
+            const formGroup = event.target.closest('.form-group')
+            const elem = formGroup.closest('.faction');
+            const input = elem.querySelector('input[type="range"]');
+            const newRep = input.value
+            formGroup.querySelector('p.notes').innerHTML = repNames(newRep) + ` (${newRep})`
+            let secFac = formGroup.id.split(".")
             let index = ftw.findIndex(i => i.class === secFac[0])
             let fIndex = ftw[index].factions.findIndex(i => i.id === secFac[1])
-            let newRep = Math.floor(ftw[index].factions[fIndex].reputation) + 1
-            if (newRep <= ftwConfig.rep.max) ftw[index].factions[fIndex].reputation = newRep
-            else return
+            ftw[index].factions[fIndex].reputation = newRep
             await game.settings.set(MODULE, 'ftw', ftw)
             cacheSettings()
-            FTW.toggleAppVis()
         })
     }
 
@@ -200,7 +209,7 @@ class Section {
                         else {
                             let section = this.renderSections(secArray)
                             $('#ftw-sections').append(section)
-                            FTW.toggleAppVis()
+                            // FTW.toggleAppVis()
                         }
                         game.modules.get(MODULE).FTW.setPosition({ height: "auto" });
                     }
@@ -220,20 +229,28 @@ class Section {
         let sections = ''
         let factions = ''
         secArray.forEach((section, index) => {
-            sections = `<div id="${section.class}" class="section">
-                            <div class="ftw-section">
+            sections = `<div id="${section.class}" class="faction-group">
+                            <header>
                                 <button id="rm-faction" data-section="${section.class}" title="Remove Faction"><i class="fa-solid fa-user-minus"></i></button>
                                 <h1>${section.name}</h1>
                                 <button id="add-faction" data-section="${section.class}" title="Add Faction"><i class="fa-solid fa-user-plus"></i></button>
-                            </div>
-                        </div>`
+                            </header>
+                        <section id="${section.class}"></section></div>`
+            
+            // `<div id="${section.class}" class="section">
+            //                 <div class="ftw-section">
+            //                     <button id="rm-faction" data-section="${section.class}" title="Remove Faction"><i class="fa-solid fa-user-minus"></i></button>
+            //                     <h1>${section.name}</h1>
+            //                     <button id="add-faction" data-section="${section.class}" title="Add Faction"><i class="fa-solid fa-user-plus"></i></button>
+            //                 </div>
+            //             </div>`
 
             $('#ftw-sections').append(sections)
 
             if (section.factions.length > 0) {
                 factions = Faction.renderFactions(section.factions)
                 // console.warn(faction)
-                $(`div[id="${section.class}"]`).append(factions)
+                $(`section[id="${section.class}"]`).append(factions)
             }
         });
         if (!open) return sections/* obj = { sections: sections, factions: factions} */
@@ -299,7 +316,7 @@ class Faction {
                         else if (!facArray) notValidString()
                         else {
                             let faction = this.renderFactions(facArray)
-                            $('#' + section).append(faction)
+                            $(`section[id="${section}"]`).append(faction)
                             // FTW.toggleAppVis()
                         }
                         game.modules.get(MODULE).FTW.setPosition({ height: "auto" });
@@ -343,19 +360,29 @@ class Faction {
     static renderFactions(facArray) {
         let factions = ''
         facArray.forEach((faction, index) => {
-            factions += `<div class="ftw-faction">
-                            <label for="rep">${faction.name}</label>
-                            <div>
-                                <button id="${faction.section}.${faction.id}" type="button" class="rep-button" title="Decrease Reputation">
-                                    <i class="fa-solid fa-minus"></i>
-                                </button>
-                                <progress id="rep" max="${(convertValues().max)}" value="${convertValues(faction.reputation).current}"> ${convertValues(faction.reputation).current} </progress>
-                                <button id="${faction.section}.${faction.id}" class="rep-button" type="button" title="Increase Reputation">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                                <span>${repNames(faction.reputation)} (${faction.reputation})</span>
+            factions += `<div class="faction">
+                            <button id="${faction.section}.${faction.id}" type="button" class="rep-button" title="Decrease Reputation" data-adjust="-1"><i class="fa-solid fa-minus"></i></button>
+                            <div class="form-group" id="${faction.section}.${faction.id}">
+                                <label>${faction.name}</label>
+                                <input type="range" value=${faction.reputation} min=${ftwConfig.rep.min} max=${ftwConfig.rep.max} step="1">
+                                <p class="notes">${repNames(faction.reputation)} (${faction.reputation})</p>
                             </div>
+                            <button id="${faction.section}.${faction.id}" class="rep-button" type="button" title="Increase Reputation" data-adjust="1"><i class="fa-solid fa-plus"></i></button>
                         </div>`
+            
+                        // `<div class="ftw-faction">
+                        //     <label for="rep">${faction.name}</label>
+                        //     <div>
+                        //         <button id="${faction.section}.${faction.id}" type="button" class="rep-button" title="Decrease Reputation">
+                        //             <i class="fa-solid fa-minus"></i>
+                        //         </button>
+                        //         <progress id="rep" max="${(convertValues().max)}" value="${convertValues(faction.reputation).current}"> ${convertValues(faction.reputation).current} </progress>
+                        //         <button id="${faction.section}.${faction.id}" class="rep-button" type="button" title="Increase Reputation">
+                        //             <i class="fa-solid fa-plus"></i>
+                        //         </button>
+                        //         <span>${repNames(faction.reputation)} (${faction.reputation})</span>
+                        //     </div>
+                        // </div>`
         });
         return factions
     }
