@@ -82,7 +82,6 @@ export class FTW extends FormApplication {
         // $('#ftw-sections').append(sections)
         // let factions = Faction.renderFactions(ftw)
 
-
         html.find('button[title="Add Faction"]').on('click', async function (event) {
             let section = event.currentTarget.attributes["data-section"].value
             Faction.addFactionDialog(true, section)
